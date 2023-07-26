@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.74.61
+IP 158.160.74.61
 
 Frontend https://last.sprint.front.nomoredomains.xyz
 
