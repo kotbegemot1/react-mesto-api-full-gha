@@ -1,6 +1,3 @@
-// import {apiConfig} from './utils'
-// console.log(apiConfig);
-
 class Auth {
   constructor(){
     this._url = 'https://api.last.sprint.students.nomoredomains.xyz';
