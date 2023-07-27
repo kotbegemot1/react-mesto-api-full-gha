@@ -158,6 +158,8 @@ function App() {
       navigate('/sign-in', {replace: true});
     })
     .catch((err) => console.log(err))
+    setTooltipTitle('Что-то пошло не так! Попробуйте ещё раз.');
+    disproveAuth();
   }
 
   function signOut() {
