@@ -16,18 +16,14 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
+      credentials: 'include',
     })
     .then(res => this._checkResponse(res))
   };
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res))
   };
@@ -37,9 +33,9 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: name,
         about: about
@@ -52,9 +48,9 @@ class Api {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: name,
         link: link
@@ -66,9 +62,7 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
+      credentials: 'include',
     })
     .then(res => this._checkResponse(res))
   }
@@ -76,9 +70,7 @@ class Api {
   putLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
+      credentials: 'include',
     })
     .then(res => this._checkResponse(res))
   }
@@ -86,9 +78,7 @@ class Api {
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`
-      }
+      credentials: 'include',
     })
     .then(res => this._checkResponse(res))
   }
@@ -98,17 +88,13 @@ class Api {
     if (isLiked) {
       return fetch(`${this._url}/cards/${cardId}/likes`, {
         method: 'PUT',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`
-        }
+        credentials: 'include',
       })
       .then(res => this._checkResponse(res))
     } else {
       return fetch(`${this._url}/cards/${cardId}/likes`, {
         method: 'DELETE',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem('token')}`
-        }
+        credentials: 'include',
       })
       .then(res => this._checkResponse(res))
     }
@@ -119,9 +105,9 @@ class Api {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         avatar: link.avatar,
       })
@@ -131,5 +117,3 @@ class Api {
 }
 
 export const api = new Api(apiConfig);
-
-

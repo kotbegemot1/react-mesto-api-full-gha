@@ -19,6 +19,7 @@ class Auth {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({password, email})
     })
     .then((res) => {
@@ -32,9 +33,8 @@ class Auth {
     //console.log(email, password);
     return fetch(`${this._url}/signin`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({password, email})
     })
     .then((res) => {
@@ -44,13 +44,10 @@ class Auth {
     })
   };
 
-  checkToken(token) {
-    // console.log('token');
-    return fetch(`${this._url}/users/me`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization" : `Bearer ${token}`
-      }
+  logout() {
+    return fetch(`${this._url}/signout`, {
+      method: 'POST',
+      credentials: 'include',
     })
     .then((res) => {
       const test = this._checkResponse(res)
@@ -62,5 +59,3 @@ class Auth {
 }
 
 export const auth = new Auth();
-
-

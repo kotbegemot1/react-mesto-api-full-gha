@@ -128,17 +128,13 @@ function App() {
 
   function handleAuth(formValue) {
     auth.Login(formValue.email, formValue.password)
-    .then((data)=>{
-      //console.log(data);
-      if (data.token){
-        // setUserEmail(formValue.email)
+    .then(()=>{
         setLoggedIn(true);
-        localStorage.setItem('token', data.token)
         navigate('/', {replace: true})
-      }
+      // }
     })
     .catch((err) => {
-      //console.log(err)
+      console.log(err)
       setTooltipTitle('Что-то пошло не так! Попробуйте ещё раз.');
       disproveAuth();
     })
@@ -165,12 +161,15 @@ function App() {
   }
 
   function signOut() {
-    setLoggedIn(false)
-    localStorage.removeItem('token')
-    setUserEmail('');
-    navigate('/sign-in', {replace: true})
-    
+    auth.logout()
+    .then(() => {
+      setLoggedIn(false);
+      setUserEmail('');
+      navigate('/sign-in', {replace: true})
+    })
+    .catch((err) => console.log(err))
   }
+
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
@@ -180,31 +179,25 @@ function App() {
     setIsDeleteCardPopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
   }
+
   useEffect(() => {
     (function tokenCheck() {
-        const token = localStorage.getItem('token');
-        // console.log(token);
-        if (token) {
-        auth.checkToken(token)
+        api.getUserInfo()
         .then((res) => {
-          console.log(res);
           setUserEmail(res.email);
           setLoggedIn(true);
           navigate('/', {replace: true})
         })
         .catch((err) => console.log(err))
-      }
     }());
   }, [navigate]);
   
   useEffect(() => {
-    // console.log(loggedIn);
     if (loggedIn) {
       Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([currentUser, cards]) => {
         setCurrentUser(currentUser);
         setCardList(cards);
-        // console.log(cards);
       })
       .catch((err) => console.log(err));
     }
